@@ -28,77 +28,60 @@
 
 #endregion
 
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-
 using Newtonsoft.Json;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
-    /// Represents Sentry's version of an <see cref="Exception"/>'s stack trace.
+    /// An interface which describes the authenticated User for a request.
+    /// You should provide at least either an id (a unique identifier for an authenticated user) or ip_address (their IP address).
     /// </summary>
-    public class SentryStacktrace
+    public class SentryUser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SentryStacktrace"/> class.
+        /// Initializes a new instance of the <see cref="SentryUser"/> class.
         /// </summary>
-        /// <param name="exception">The <see cref="Exception"/>.</param>
-        public SentryStacktrace(Exception exception)
+        /// <param name="username">The username.</param>
+        public SentryUser(string username)
         {
-            if (exception == null)
-                return;
-
-            StackTrace trace = new StackTrace(exception, true);
-            var frames = trace.GetFrames();
-
-            if (frames == null)
-                return;
-
-            int length = frames.Length;
-            Frames = new ExceptionFrame[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                StackFrame frame = frames[i];
-                Frames[i] = new ExceptionFrame(frame);
-            }
+            Username = username;
         }
 
 
         /// <summary>
-        /// Gets or sets the <see cref="Exception"/> frames.
+        /// Gets or sets the user's email address.
         /// </summary>
         /// <value>
-        /// The <see cref="Exception"/> frames.
+        /// The user's email address.
         /// </value>
-        [JsonProperty(PropertyName = "frames")]
-        public ExceptionFrame[] Frames { get; set; }
-
+        [JsonProperty(PropertyName = "email", NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Gets or sets the user's unique identifier.
         /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            if (Frames == null || !Frames.Any())
-                return String.Empty;
+        /// <value>
+        /// The unique identifier.
+        /// </value>
+        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
+        public string Id { get; set; }
 
-            StringBuilder sb = new StringBuilder();
+        /// <summary>
+        /// Gets or sets the user's IP address.
+        /// </summary>
+        /// <value>
+        /// The user's IP address.
+        /// </value>
+        [JsonProperty(PropertyName = "ip_address", NullValueHandling = NullValueHandling.Ignore)]
+        public string IpAddress { get; set; }
 
-            foreach (var frame in Frames)
-            {
-                sb.Append("   at ");
-                sb.Append(frame);
-                sb.AppendLine();
-            }
-
-            return sb.ToString();
-        }
+        /// <summary>
+        /// Gets or sets the user's username.
+        /// </summary>
+        /// <value>
+        /// The user's username.
+        /// </value>
+        [JsonProperty(PropertyName = "username", NullValueHandling = NullValueHandling.Ignore)]
+        public string Username { get; set; }
     }
 }

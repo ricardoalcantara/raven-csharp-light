@@ -1,4 +1,4 @@
-﻿using SharpRavenLight.Rest.DTO;
+﻿using SharpRavenLight.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,8 @@ namespace SharpRavenLight.ConsoleTest
         static void Main(string[] args)
         {
             var client = new RavenClientLight(dsnUrl);
-            client.Capture(new SentryEvent(new SentryMessage("Hello world")));
+            client.Capture(new SentryEvent(new SentryMessage("Hello world 1900")));
+            client.CaptureMessage(new SentryMessage("Hello world IFNOOOOOO"));
 
             try
             {

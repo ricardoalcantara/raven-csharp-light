@@ -33,7 +33,7 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// Represents Sentry's version of an <see cref="Exception"/>.

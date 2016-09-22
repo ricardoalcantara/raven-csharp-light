@@ -28,7 +28,7 @@
 
 #endregion
 
-namespace SharpRavenLight.Rest
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// Indicates the severity of the error.

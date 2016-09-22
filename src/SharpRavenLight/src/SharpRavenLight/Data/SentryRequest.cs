@@ -32,7 +32,7 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// The Request information is stored in the Http interface. Two arguments are required: url and method.

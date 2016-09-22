@@ -34,7 +34,7 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// Represents Sentry's version of <see cref="System.Diagnostics.StackFrame" />.

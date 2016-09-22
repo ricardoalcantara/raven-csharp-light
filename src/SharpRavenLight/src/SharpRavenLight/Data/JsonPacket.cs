@@ -37,7 +37,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SharpRavenLight.Util;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// Represents the JSON packet that is transmitted to Sentry.
@@ -217,7 +217,7 @@ namespace SharpRavenLight.Rest.DTO
         /// Defaults to error.
         /// </summary>
         [JsonProperty(PropertyName = "level", NullValueHandling = NullValueHandling.Ignore, Required = Required.Always)]
-        //[JsonConverter(typeof(ErrorLevelConverter))]
+        [JsonConverter(typeof(ErrorLevelConverter))]
         public ErrorLevel Level { get; set; }
 
         /// <summary>

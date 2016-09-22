@@ -1,4 +1,4 @@
-﻿using SharpRavenLight.Rest.DTO;
+﻿using SharpRavenLight.Data;
 using SharpRavenLight.Util;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,6 @@ namespace SharpRavenLight.Rest
         private const string USER_AGENT = "SharpRavenLight/1.0.0";
         private const int SENTRY_VERSION = 7;
         private Dsn dsn;
-
-        //https://sentry.io/api/100110/store/
-        //X-Sentry-Auth
-        //Sentry sentry_version=7, sentry_client=App/1.0.0, sentry_timestamp=1474427153, sentry_key=, sentry_secret=
 
         private string SentryAuth
         {

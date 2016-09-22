@@ -33,7 +33,7 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
-namespace SharpRavenLight.Rest.DTO
+namespace SharpRavenLight.Data
 {
     /// <summary>
     /// Data class for containing <see cref="Exception.Data"/>.
