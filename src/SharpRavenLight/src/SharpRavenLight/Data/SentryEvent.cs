@@ -7,17 +7,17 @@ namespace SharpRavenLight.Data
 {
     public class SentryEvent
     {
-        private Exception exception;
-        private SentryMessage sentryMessage;
+        public Exception Exception { get; set; }
+        public SentryMessage SentryMessage { get; set; }
 
         public SentryEvent(Exception exception)
         {
-            this.exception = exception;
+            this.Exception = exception;
         }
 
         public SentryEvent(SentryMessage sentryMessage)
         {
-            this.sentryMessage = sentryMessage;
+            this.SentryMessage = sentryMessage;
         }
     }
 }
