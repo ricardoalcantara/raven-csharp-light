@@ -3,6 +3,7 @@ using SharpRavenLight.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,7 +13,10 @@ namespace SharpRavenLight.Rest
     {
         private const string USER_AGENT = "SharpRavenLight/1.0.0";
         private const int SENTRY_VERSION = 7;
-        private Dsn dsn;
+        private readonly Dsn dsn;
+        public bool Compress { get; }
+
+        public TimeSpan Timeout { get; set; }
 
         private string SentryAuth
         {
@@ -23,21 +27,34 @@ namespace SharpRavenLight.Rest
             }
         }
 
-        public SentryApi(Dsn dsn)
+        public SentryApi(Dsn dsn, bool compress = false)
+            : this(dsn, TimeSpan.FromSeconds(15), compress)
+        {
+        }
+
+        public SentryApi(Dsn dsn, TimeSpan timeout, bool compress = false)
         {
             this.dsn = dsn;
+            Timeout = timeout;
+            Compress = compress;
         }
 
         public async Task<SentryStoreResponse> StoreAsync(JsonPacket jsonPacket)
         {
             var httpClient = new HttpClient();
-            //httpClient.Timeout = Timeout;
+            httpClient.Timeout = Timeout;
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Add("X-Sentry-Auth",SentryAuth);
             httpClient.DefaultRequestHeaders.Add("User-Agent", USER_AGENT);
-            //httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
 
-            var content = new StringContent(jsonPacket.ObjectToJsonString());
+            if (Compress)
+            {
+                httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
+            }
+
+            var content = Compress
+                ? new ByteArrayContent(jsonPacket.ObjectToJsonString().Gzip())
+                : new StringContent(jsonPacket.ObjectToJsonString());
 
             var httpResponse = await httpClient.PostAsync($"https://{dsn.Url}/api/{dsn.ProjectId}/store/", content);
 

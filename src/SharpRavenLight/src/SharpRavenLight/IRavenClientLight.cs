@@ -5,7 +5,7 @@ using SharpRaven;
 
 namespace SharpRavenLight
 {
-    public partial interface IRavenClientLight: IRavenClient
+    public interface IRavenClientLight: IRavenClient
     {
     }
 }
