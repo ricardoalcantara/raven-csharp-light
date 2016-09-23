@@ -31,10 +31,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using SharpRavenLight;
 using SharpRavenLight.Data;
 
-namespace SharpRavenLight.Data
+namespace SharpRaven
 {
     /// <summary>
     /// Raven client interface.

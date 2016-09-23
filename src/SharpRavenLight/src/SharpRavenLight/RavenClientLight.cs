@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SharpRavenLight.Util;
+using SharpRavenLight.Configuration;
 using SharpRavenLight.Data;
 
 namespace SharpRavenLight
 {
-    public class RavenClientLight : IRavenClient
+    public partial class RavenClientLight : IRavenClientLight
     {
         private Dsn dsn;
 
@@ -26,13 +26,18 @@ namespace SharpRavenLight
         }
 
         public RavenClientLight(string dsn)
+            : this(new Dsn(dsn))
         {
-            this.dsn = new Dsn(dsn);
         }
 
         public RavenClientLight(Dsn dsn)
         {
             this.dsn = dsn;
+        }
+
+        public RavenClientLight(ConfigurationOptions options)
+            : this(options.dsn)
+        {
         }
 
         public string Capture(SentryEvent sentryEvent)
