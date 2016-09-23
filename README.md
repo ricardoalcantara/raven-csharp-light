@@ -1,13 +1,14 @@
 # RavenSharp Light
 SharpRaven Light a lightweight .NET client for [Sentry](https://getsentry.com/welcome/).
 
-## Obs
-As a Light version of the oficial lib RavenSharp, it contains just the basic to log the event.
+## Disclaimer
+It is a `Light` version of the oficial lib RavenSharp, it contains just the basic to log the event.
 It is designed to be compatible with the oficial lib, so it implements the same interface `IClientSentry.cs`.
 The usage is also very similar.
 
 ## Usage 
-#### Retrieved from [RavenSharp](https://github.com/wakawaka54/raven-csharp/blob/develop/README.md)
+- Retrieved from [RavenSharp](https://github.com/wakawaka54/raven-csharp/blob/develop/README.md)
+
 Instantiate the client with your DSN:
 
 ```csharp
