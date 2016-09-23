@@ -39,7 +39,7 @@ namespace SharpRaven
     /// <summary>
     /// Raven client interface.
     /// </summary>
-    public partial interface IRavenClient
+    public interface IRavenClient
     {
         /// <summary>
         /// Enable Gzip Compression?
