@@ -25,7 +25,6 @@ namespace SharpRavenLight.Util
                 base.WriteJson(writer, value, serializer);
 
             var level = value.ToString().ToLowerInvariant();
-            writer.WritePropertyName(writer.Path);
             writer.WriteValue(level);
         }
     }
