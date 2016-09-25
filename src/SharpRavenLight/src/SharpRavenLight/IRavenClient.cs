@@ -31,15 +31,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using SharpRavenLight;
 using SharpRavenLight.Data;
 
-namespace SharpRavenLight.Data
+namespace SharpRaven
 {
     /// <summary>
     /// Raven client interface.
     /// </summary>
-    public partial interface IRavenClient
+    public interface IRavenClient
     {
         /// <summary>
         /// Enable Gzip Compression?

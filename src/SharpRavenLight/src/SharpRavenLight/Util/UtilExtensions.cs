@@ -22,10 +22,10 @@ namespace SharpRavenLight.Util
 
         internal static byte[] Gzip(this string txt)
         {
-            byte[] data = Encoding.UTF8.GetBytes(txt);
+            var data = Encoding.UTF8.GetBytes(txt);
 
-            using (MemoryStream stream = new MemoryStream())
-            using (GZipStream gzip = new GZipStream(stream, CompressionMode.Compress))
+            using (var stream = new MemoryStream())
+            using (var gzip = new GZipStream(stream, CompressionMode.Compress))
             {
                 gzip.Write(data, 0, data.Length);
                 stream.Seek(0, SeekOrigin.Begin);
