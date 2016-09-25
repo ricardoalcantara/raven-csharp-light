@@ -114,5 +114,18 @@ namespace SharpRavenLight
 
             return result.id;
         }
+
+        public static void CatchAllUnhandledException(Action<IRavenClient> action, IRavenClient ravenClent)
+        {
+            try
+            {
+                action(ravenClent);
+            }
+            catch (Exception ex)
+            {
+                ravenClent.Capture(new SentryEvent(ex));
+                throw;
+            }
+        }
     }
 }

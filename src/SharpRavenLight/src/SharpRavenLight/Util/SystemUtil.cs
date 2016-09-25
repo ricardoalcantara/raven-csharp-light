@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace SharpRavenLight.Util
 {
-    public class SystemUtil
+    internal class SystemUtil
     {
-        public static Dictionary<string, string> GetModules()
+        internal static Dictionary<string, string> GetModules()
         {
             return new Dictionary<string, string>();
         }

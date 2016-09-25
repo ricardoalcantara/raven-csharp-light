@@ -13,7 +13,14 @@ namespace SharpRavenLight.ConsoleTest
         static void Main(string[] args)
         {
             var client = new RavenClientLight(dsnUrl);
+
+            RavenClientLight.CatchAllUnhandledException(Run, client);
+        }
+
+        static void Run(IRavenClient client)
+        {
             client.Capture(new SentryEvent(new SentryMessage("Hello world 1900")));
+
             client.CaptureMessage(new SentryMessage("Hello world IFNOOOOOO"));
 
             try

@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace SharpRavenLight.Util
 {
-    public static class UtilExtensions
+    internal static class UtilExtensions
     {
-        public static T JsonStringToObject<T>(this string json)
+        internal static T JsonStringToObject<T>(this string json)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
         }
 
-        public static string ObjectToJsonString(this object obj)
+        internal static string ObjectToJsonString(this object obj)
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
 
-        public static byte[] Gzip(this string txt)
+        internal static byte[] Gzip(this string txt)
         {
             byte[] data = Encoding.UTF8.GetBytes(txt);
 
