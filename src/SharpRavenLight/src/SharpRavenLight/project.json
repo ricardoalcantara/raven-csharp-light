@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta2",
   "description": "SharpRaven Light is a lightweight .NET client for Sentry.",
   "authors": [ "Ricardo Alcantara" ],
   "packOptions": {
@@ -21,6 +21,13 @@
 
   "frameworks": {
     "net45": {
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "System.Net.Http": "4.0.0.0"
+      }      
+    },
+	"net451": {
       "dependencies": {
       },
       "frameworkAssemblies": {
