@@ -18,6 +18,8 @@ namespace SharpRavenLight.Rest
 
         public TimeSpan Timeout { get; set; }
 
+        protected HttpClient httpClient  = new HttpClient();
+
         private string SentryAuth
         {
             get
@@ -37,20 +39,25 @@ namespace SharpRavenLight.Rest
             this.dsn = dsn;
             Timeout = timeout;
             Compress = compress;
+
+            InitHttpClient();
         }
 
-        public async Task<SentryStoreResponse> StoreAsync(JsonPacket jsonPacket)
-        {
-            var httpClient = new HttpClient();
-            httpClient.Timeout = Timeout;
+        public void InitHttpClient() {
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("X-Sentry-Auth",SentryAuth);
+            httpClient.DefaultRequestHeaders.Add("X-Sentry-Auth", SentryAuth);
             httpClient.DefaultRequestHeaders.Add("User-Agent", USER_AGENT);
 
             if (Compress)
             {
                 httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
             }
+        }
+
+        public async Task<SentryStoreResponse> StoreAsync(JsonPacket jsonPacket)
+        {
+            
+            httpClient.Timeout = Timeout;           
 
             var content = Compress
                 ? new ByteArrayContent(jsonPacket.ObjectToJsonString().Gzip())
