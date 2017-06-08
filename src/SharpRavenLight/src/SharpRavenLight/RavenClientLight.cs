@@ -125,5 +125,18 @@ namespace SharpRavenLight
                 throw;
             }
         }
+
+        public static async Task CatchAllUnhandledExceptionAsync(Func<IRavenClient, Task> fun, IRavenClient ravenClent)
+        {
+            try
+            {
+                await fun(ravenClent);
+            }
+            catch (Exception ex)
+            {
+                ravenClent.Capture(new SentryEvent(ex));
+                throw;
+            }
+        }
     }
 }
