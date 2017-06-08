@@ -18,6 +18,10 @@ namespace SharpRavenLight
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
         public Dsn CurrentDsn { get; }
 
+        protected Lazy<Rest.SentryApi> sentryApiLazy;
+
+        protected Rest.SentryApi sentryApi => sentryApiLazy.Value;
+
         public RavenClientLight(string dsn)
             : this(new Dsn(dsn))
         {
@@ -26,11 +30,18 @@ namespace SharpRavenLight
         public RavenClientLight(Dsn dsn)
         {
             this.CurrentDsn = dsn;
+
+            this.sentryApiLazy = new Lazy<Rest.SentryApi>(() => {
+                return new Rest.SentryApi(this.CurrentDsn);
+            });
         }
 
         public RavenClientLight(ConfigurationOptions options)
             : this(options.dsn)
         {
+
+           
+
         }
 
         public string Capture(SentryEvent sentryEvent)
@@ -42,7 +53,7 @@ namespace SharpRavenLight
         {
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, sentryEvent);
 
-            var sentryApi = new Rest.SentryApi(CurrentDsn);
+            
             var result = await sentryApi.StoreAsync(jsonPacket);
 
             return result.id;
@@ -52,7 +63,7 @@ namespace SharpRavenLight
         {
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, e);
 
-            var sentryApi = new Rest.SentryApi(CurrentDsn);
+            
             var result = sentryApi.StoreAsync(jsonPacket).Result;
 
             return result.id;
@@ -63,7 +74,7 @@ namespace SharpRavenLight
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, e);
             jsonPacket.Tags = tags;
 
-            var sentryApi = new Rest.SentryApi(CurrentDsn);
+           
             var result = sentryApi.StoreAsync(jsonPacket).Result;
 
             return result.id;
@@ -85,7 +96,7 @@ namespace SharpRavenLight
                 Extra = extra
             };
 
-            var sentryApi = new Rest.SentryApi(CurrentDsn);
+           
             var result = await sentryApi.StoreAsync(jsonPacket);
 
             return result.id;
@@ -107,7 +118,7 @@ namespace SharpRavenLight
                 Extra = extra
             };
 
-            var sentryApi = new Rest.SentryApi(CurrentDsn);
+            
             var result = await sentryApi.StoreAsync(jsonPacket);
 
             return result.id;
