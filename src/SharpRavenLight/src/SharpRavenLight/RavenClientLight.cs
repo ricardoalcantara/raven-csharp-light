@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SharpRavenLight.Configuration;
 using SharpRavenLight.Data;
+using SharpRavenLight.Util;
 using SharpRaven;
 
 namespace SharpRavenLight
@@ -22,14 +23,22 @@ namespace SharpRavenLight
 
         protected Rest.SentryApi sentryApi => sentryApiLazy.Value;
 
-        public RavenClientLight(string dsn)
-            : this(new Dsn(dsn))
+        public RavenClientLight(string dsn, string environment = "")
+            : this(new Dsn(dsn), environment)
         {
         }
 
-        public RavenClientLight(Dsn dsn)
+        public RavenClientLight(Dsn dsn, string environment)
         {
+
             this.CurrentDsn = dsn;
+            #if NET_CORE
+                this.Environment = SystemUtil.IsNullOrWhiteSpace(environment)
+                    ? System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+                    : environment;
+            #else
+                this.Environment = environment;
+            #endif
 
             this.sentryApiLazy = new Lazy<Rest.SentryApi>(() => {
                 return new Rest.SentryApi(this.CurrentDsn);
@@ -37,11 +46,8 @@ namespace SharpRavenLight
         }
 
         public RavenClientLight(ConfigurationOptions options)
-            : this(options.dsn)
+            : this(options.dsn, options.environment)
         {
-
-           
-
         }
 
         public string Capture(SentryEvent sentryEvent)
@@ -52,7 +58,6 @@ namespace SharpRavenLight
         public async Task<string> CaptureAsync(SentryEvent sentryEvent)
         {
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, sentryEvent);
-
             
             var result = await sentryApi.StoreAsync(jsonPacket);
 
@@ -62,6 +67,7 @@ namespace SharpRavenLight
         public string CaptureEvent(Exception e)
         {
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, e);
+            jsonPacket.Environment = Environment;
 
             
             var result = sentryApi.StoreAsync(jsonPacket).Result;
@@ -73,6 +79,7 @@ namespace SharpRavenLight
         {
             var jsonPacket = new JsonPacket(CurrentDsn.ProjectId, e);
             jsonPacket.Tags = tags;
+            jsonPacket.Environment = Environment;
 
            
             var result = sentryApi.StoreAsync(jsonPacket).Result;
@@ -93,7 +100,8 @@ namespace SharpRavenLight
                 Level = level,
                 Tags = tags,
                 Fingerprint = fingerprint,
-                Extra = extra
+                Extra = extra,
+                Environment = this.Environment
             };
 
            
@@ -115,7 +123,8 @@ namespace SharpRavenLight
                 Level = level,
                 Tags = tags,
                 Fingerprint = fingerprint,
-                Extra = extra
+                Extra = extra,
+                Environment = this.Environment
             };
 
             
