@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace SharpRavenLight.Util
@@ -28,7 +29,35 @@ namespace SharpRavenLight.Util
         /// </returns>
         internal static Dictionary<string, string> GetModules()
         {
-            return new Dictionary<string, string>();
+            #if NET_CORE
+                return System.Reflection.Assembly
+                    .GetExecutingAssembly()
+                    .GetReferencedAssemblies()
+                    .OrderBy(a => a.Name)
+                    .ToDictionary(key => key.Name, value => value.Version.ToString());
+            #elif NET45
+                var assemblies = AppDomain.CurrentDomain
+                    .GetAssemblies()
+                    #if (!net35)
+                    .Where(q => !q.IsDynamic)
+                    #endif
+                    .Select(a => a.GetName())
+                    .OrderBy(a => a.Name);
+
+                var dictionary = new Dictionary<string, string>();
+
+                foreach (var assembly in assemblies)
+                {
+                    if (dictionary.ContainsKey(assembly.Name))
+                        continue;
+
+                    dictionary.Add(assembly.Name, assembly.Version.ToString());
+                }
+
+                return dictionary;
+            #else
+                return new Dictionary<string, string>();
+            #endif
         }
     }
 }
