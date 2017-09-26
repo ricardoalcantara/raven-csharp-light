@@ -28,7 +28,11 @@ namespace SharpRavenLight.Util
         /// </returns>
         internal static Dictionary<string, string> GetModules()
         {
-            return new Dictionary<string, string>();
+            return System.Reflection.Assembly
+                .GetExecutingAssembly()
+                .GetReferencedAssemblies()
+                .OrderBy(a => a.Name)
+                .ToDictionary(key => key.Name, value => value.Version.ToString());;
         }
     }
 }
