@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SharpRavenLight", "src\SharpRavenLight\SharpRavenLight.xproj", "{FE67E84D-A95E-4BB7-ABE5-07CFDD3B4D6C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SharpRavenLight", "src\SharpRavenLight\SharpRavenLight.csproj", "{FE67E84D-A95E-4BB7-ABE5-07CFDD3B4D6C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AC093BC7-09D0-43F2-98F1-051F7051BC59}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SharpRavenLight.ConsoleTest", "test\SharpRavenLight.ConsoleTest\SharpRavenLight.ConsoleTest.xproj", "{1B0C2B5C-7132-4DC4-8FA9-5930B2B46A14}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SharpRavenLight.ConsoleTest", "test\SharpRavenLight.ConsoleTest\SharpRavenLight.ConsoleTest.csproj", "{1B0C2B5C-7132-4DC4-8FA9-5930B2B46A14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

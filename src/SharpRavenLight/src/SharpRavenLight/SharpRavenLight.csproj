@@ -19,6 +19,10 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' Or '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>NET_CORE</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
@@ -31,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' Or '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>NET_CORE</DefineConstants>
     <PackageReference Include="System.Diagnostics.StackTrace" Version="4.0.1" />
   </ItemGroup>
 
