@@ -12,6 +12,10 @@ The usage is also very similar.
 Instantiate the client with your DSN:
 
 ```csharp
+using SharpRavenLight;
+
+...
+
 var ravenClient = new RavenClientLight("http://public:secret@example.com/project-id");
 ```
 
@@ -19,6 +23,11 @@ var ravenClient = new RavenClientLight("http://public:secret@example.com/project
 Call out to the client in your catch block:
 
 ```csharp
+using SharpRavenLight;
+using SharpRavenLight.Data;
+
+...
+
 try
 {
     int i2 = 0;
